@@ -1,0 +1,78 @@
+<div class="columns is-multiline">
+    <div class="column is-12 is-centered">
+        <table class="table is-striped">
+            <thead>
+                <tr>
+                    <th> Nom </th>
+                    <th> Description</th>
+                    <th> Fournisseur</th>
+                    <th> Ingredients</th>
+                    <th> Conservation</th>
+                    <th> Prix </th>
+
+                </tr>
+            </thead>
+            <tbody *ngFor="let produit of produits | keyvalue let i = index" [attr.data-index]="i">
+                
+                <ng-container  *ngIf="i%2==0; then thenTemplate; else elseTemplate"></ng-container>
+                
+                <ng-template #thenTemplate class="blue">
+                    <tr class="blue">
+                        <td> {{produit.value.nom}}</td>
+                        <td> {{produit.value.description | slice:0:20 }}{{ produit.value.description.length > 20 ? '...' : '' }}</td>
+                        <td> {{produit.value.fournisseur}}</td>
+             
+                        <td>
+                            <span *ngFor='let ingredients of produit.value.ingredients'> {{ingredients}},</span>
+                               
+                            </td> 
+                        <td> {{produit.value.prix | number}} €</td>
+                        <td> {{produit.value.conservation}}</td>
+                        <td><a (click)="deleteProduit(produit.value)">Supprimer le produit</a> </td>
+                    </tr>
+                </ng-template>
+                <ng-template #elseTemplate>
+                    <tr>
+                        <td> {{produit.value.nom}}</td>
+                        <td> {{produit.value.description | slice:0:20 }}{{ produit.value.description.length > 20 ? '...' : '' }}</td>
+                        <td> {{produit.value.fournisseur}}</td>
+  
+                        <td>
+                            <span *ngFor='let ingredients of produit.value.ingredients'> {{ingredients}},</span>
+                           
+                        </td> 
+                                
+                       
+                        <td> {{produit.value.prix | number}} €</td>
+                        <td> {{produit.value.conservation}}</td>
+                        <td><a (click)="deleteProduit(produit.value)">Supprimer le produit</a> </td>
+                    </tr>
+                </ng-template>             
+            </tbody>           
+        </table>
+    </div>
+    <div class="column is-5">
+        <form class="form" (ngSubmit)="register()" [formGroup]="produitForm" [hidden]="hiddenForm">
+            <div>
+                <label>Nom</label><input class="input"  formControlName="nom" >
+                <div *ngIf="nomCtrl.dirty && nomCtrl.hasError('required')">Le nom est requis </div>
+            </div>
+            <div>
+                <label>Description</label><input class="input" type="text"formControlName="description">
+                <div *ngIf="descriptionCtrl.dirty && descriptionCtrl.hasError('required')">La description est requise </div>
+            </div>
+            <div>
+                <label>Fournisseur</label><input class="input" type="text" formControlName="fournisseur">
+                <div *ngIf="fournisseurCtrl.dirty && fournisseurCtrl.hasError('required')">Le fournisseur est requis </div>
+            </div>
+            <div>
+                <label>Age</label><input class="input" type="number" formControlName="age">
+                <div *ngIf="ageCtrl.dirty && ageCtrl.hasError('pattern')">L'age est incorrect</div>
+            </div>
+            <button  type="submit"  [disabled]="produitForm.invalid">Register</button>
+        </form>
+    </div>  
+</div>
+
+  
+  
