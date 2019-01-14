@@ -27,7 +27,7 @@ export class ProduitComponent implements OnInit {
     this.ageCtrl = fb.control("", Validators.pattern("^[0-9]*$"));
     this.fournisseurCtrl = fb.control("",[Validators.required]);
     this.descriptionCtrl = fb.control("",[Validators.required]);
-    this.prixCtrl = fb.control("", Validators.pattern("^[0-9]*$"));
+    this.prixCtrl = fb.control("", [Validators.required,Validators.pattern("^[0-9]*$")]);
     this.produitForm = fb.group({
     nom: this.nomCtrl,
     age : this.ageCtrl,

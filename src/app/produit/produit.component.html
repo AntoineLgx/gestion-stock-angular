@@ -7,8 +7,8 @@
                     <th> Description</th>
                     <th> Fournisseur</th>
                     <th> Ingredients</th>
-                    <th> Conservation</th>
                     <th> Prix </th>
+                    <th> Conservation</th>
 
                 </tr>
             </thead>
@@ -18,8 +18,8 @@
                 
                 <ng-template #thenTemplate class="blue">
                     <tr class="blue">
-                        <td> {{produit.value.nom}}</td>
-                        <td> {{produit.value.description | slice:0:20 }}{{ produit.value.description.length > 20 ? '...' : '' }}</td>
+                        <td> {{produit.value.nom | uppercase}}</td>
+                        <td> {{produit.value.description | lowercase | slice:0:20 }}{{ produit.value.description.length > 20 ? '...' : '' }}</td>
                         <td> {{produit.value.fournisseur}}</td>
              
                         <td>
@@ -33,9 +33,9 @@
                 </ng-template>
                 <ng-template #elseTemplate>
                     <tr>
-                        <td> {{produit.value.nom}}</td>
-                        <td> {{produit.value.description | slice:0:20 }}{{ produit.value.description.length > 20 ? '...' : '' }}</td>
-                        <td> {{produit.value.fournisseur}}</td>
+                            <td> {{produit.value.nom | uppercase}}</td>
+                            <td> {{produit.value.description | lowercase | slice:0:20 }}{{ produit.value.description.length > 20 ? '...' : '' }}</td>
+                            <td> {{produit.value.fournisseur}}</td>
   
                         <td>
                             <span *ngFor='let ingredients of produit.value.ingredients'> {{ingredients}},</span>
@@ -68,6 +68,7 @@
             <div>
                 <label>Age</label><input class="input" type="number" formControlName="age">
                 <div *ngIf="ageCtrl.dirty && ageCtrl.hasError('pattern')">L'age est incorrect</div>
+                <div *ngIf="ageCtrl.dirty && ageCtrl.hasError('required')">L'age est requis</div>
             </div>
             <button  type="submit"  [disabled]="produitForm.invalid">Register</button>
         </form>
